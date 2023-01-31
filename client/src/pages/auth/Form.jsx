@@ -33,22 +33,45 @@ const Form = () => {
     const isRegister = pageType === "register";
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
     const register = async (values, onSubmitProps) => {
+        const res = await fetch('http://localhost:3001/register',
+            {
+                method: 'POST',
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify(values)
+            })
+
+        const data = await res.json();
         onSubmitProps.resetForm();
-        dispatch(setLogin({
-            user: values,
-            token: 'valid'
-        }));
-        navigate("/");
+        if (data) {
+            setPageType('login');
+        }
     }
     const login = async (values, onSubmitProps) => {
-        dispatch(
-            setLogin({
-            user: values,
-            token: 'valid'
-        }))
-        onSubmitProps.resetForm();
-        navigate("/");
+
+        const res = await fetch('http://localhost:3001/login',
+            {
+                method: 'POST',
+                headers: {
+                    "Accept": 'application/json',
+                    "Content-Type": "application/json; charset=utf-8"
+                },
+                body: JSON.stringify(values)
+            })
+        const data = await res.json();
+        if (data) {
+            dispatch(
+                setLogin({
+                    user: data.user,
+                    token: data.token
+                }));
+            onSubmitProps.resetForm();
+            navigate("/");
+        }
     }
     const handleFormSubmit = async (values, onSubmitProps) => {
         if (isLogin) { await login(values, onSubmitProps) }

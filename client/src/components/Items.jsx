@@ -8,10 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { setCart } from '../state';
 
 
-const Items = () => {
+const Items = ({ productId, title, price, description, category, image }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = useSelector(state => state.user);
+
   return (
     <Grid md={2} xs={6} p='1rem'>
       <Card sx={{ maxWidth: 200 }}>
@@ -19,17 +20,16 @@ const Items = () => {
           <CardMedia
             component="img"
             height="160"
-            image="https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/2414313/2022/4/18/c08becf1-36fc-4c1f-a3c9-92542d3ef8221650284958075HERENOWMenRedBlackCheckedPureCottonCasualShirt1.jpg"
+            image={image}
             alt="green iguana"
             sx={{ objectFit: "contain" }}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
-              Lizard
+              {title}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Lizards are a widespread group of squamate reptiles, with over 6,000
-              species,
+              {description}
             </Typography>
           </CardContent>
         </CardActionArea>

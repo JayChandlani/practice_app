@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     user: null,
     token: null,
-    cart: []
+    cart: [],
+    products: []
 }
 
 export const authSlice = createSlice({
@@ -18,11 +19,14 @@ export const authSlice = createSlice({
             state.user = null;
             state.token = null;
         },
-        setCart: (state,action) => {
-            state.cart = [...state.cart, action.payload.item]
+        setCart: (state, action) => {
+            state.cart = [...state.cart, action.payload.productId]
         },
+        setProducts: (state, action) => {
+            state.products = action.payload.products
+        }
     }
 });
 
-export const { setLogin, setLogout ,setCart} = authSlice.actions;
+export const { setLogin, setLogout, setCart, setProducts } = authSlice.actions;
 export default authSlice.reducer;
